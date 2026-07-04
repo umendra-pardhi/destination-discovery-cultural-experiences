@@ -34,7 +34,7 @@ export function getFromCache<T>(key: string): T | undefined {
 /** Store a value in the cache. */
 export function setInCache<T>(key: string, data: T): void {
   // Cap cache size to prevent memory leaks
-  if (cache.size > 100) {
+  if (cache.size >= 100 && !cache.has(key)) {
     const oldestKey = cache.keys().next().value;
     if (oldestKey) cache.delete(oldestKey);
   }

@@ -17,8 +17,17 @@ export function StreamingText({ text, isStreaming, className = '' }: StreamingTe
     let inList = false;
     const processedLines = [];
 
+    const escapeHtml = (str: string) => {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    };
+
     for (let line of lines) {
-      let trimmed = line.trim();
+      const trimmed = line.trim();
       if (!trimmed) {
         if (inList) {
           processedLines.push('</ul>');
@@ -27,8 +36,11 @@ export function StreamingText({ text, isStreaming, className = '' }: StreamingTe
         continue;
       }
 
+      // Escape HTML tags from content first
+      let escapedLine = escapeHtml(trimmed);
+
       // Convert bold text
-      line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      escapedLine = escapedLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
       // Convert headings
       if (trimmed.startsWith('### ')) {
@@ -36,33 +48,33 @@ export function StreamingText({ text, isStreaming, className = '' }: StreamingTe
           processedLines.push('</ul>');
           inList = false;
         }
-        processedLines.push(`<h3>${trimmed.slice(4)}</h3>`);
+        processedLines.push(`<h3>${escapedLine.replace(/^###\s+/, '')}</h3>`);
       } else if (trimmed.startsWith('## ')) {
         if (inList) {
           processedLines.push('</ul>');
           inList = false;
         }
-        processedLines.push(`<h2>${trimmed.slice(3)}</h2>`);
+        processedLines.push(`<h2>${escapedLine.replace(/^##\s+/, '')}</h2>`);
       } else if (trimmed.startsWith('# ')) {
         if (inList) {
           processedLines.push('</ul>');
           inList = false;
         }
-        processedLines.push(`<h1>${trimmed.slice(2)}</h1>`);
+        processedLines.push(`<h1>${escapedLine.replace(/^#\s+/, '')}</h1>`);
       } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
         // Bullet list item
         if (!inList) {
           processedLines.push('<ul>');
           inList = true;
         }
-        processedLines.push(`<li>${line.replace(/^\s*[-*]\s+/, '')}</li>`);
+        processedLines.push(`<li>${escapedLine.replace(/^\s*[-*]\s+/, '')}</li>`);
       } else {
         // Normal paragraph
         if (inList) {
           processedLines.push('</ul>');
           inList = false;
         }
-        processedLines.push(`<p>${line}</p>`);
+        processedLines.push(`<p>${escapedLine}</p>`);
       }
     }
 

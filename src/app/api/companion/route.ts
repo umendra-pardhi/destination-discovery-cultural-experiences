@@ -2,9 +2,15 @@ import { NextRequest } from 'next/server';
 import { generateStreamingContent, createErrorResponse } from '@/lib/gemini';
 import { buildCompanionPrompt, buildCompanionSystemPrompt } from '@/lib/prompts';
 import { validateChatMessage, sanitizeInput } from '@/lib/validators';
+import { isRateLimited } from '@/lib/rateLimit';
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    if (isRateLimited(ip)) {
+      return createErrorResponse('Too many requests. Please try again in a minute.', 429);
+    }
+
     const body = await req.json().catch(() => ({}));
     const { message = '', history = [] } = body;
 

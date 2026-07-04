@@ -3,7 +3,7 @@
    ============================================================ */
 
 const DANGEROUS_PATTERNS = [
-  /ignore\s+(previous|above|all)\s+(instructions|prompts)/i,
+  /ignore\s+(?:previous|above|all\s+previous|all)\s+(?:instructions|prompts)/i,
   /system\s*prompt/i,
   /you\s+are\s+now/i,
   /act\s+as\s+if/i,

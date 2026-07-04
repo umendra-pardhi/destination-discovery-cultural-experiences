@@ -3,10 +3,16 @@ import { generateContent, createErrorResponse } from '@/lib/gemini';
 import { buildDiscoverPrompt } from '@/lib/prompts';
 import { validateInterests, validateBudget, validateTravelStyle, sanitizeInput } from '@/lib/validators';
 import { createCacheKey, getFromCache, setInCache } from '@/lib/cache';
+import { isRateLimited } from '@/lib/rateLimit';
 import type { DiscoverResponse } from '@/types';
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    if (isRateLimited(ip)) {
+      return createErrorResponse('Too many requests. Please try again in a minute.', 429);
+    }
+
     const body = await req.json().catch(() => ({}));
     const { interests = [], travelStyle = 'solo', budget = 'moderate', duration = '7 days', region = '' } = body;
 
