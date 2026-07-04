@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { StreamingText } from '@/components/ui/StreamingText';
 import { useChat } from '@/hooks/useChat';
-import { Send, Trash2, ShieldAlert } from 'lucide-react';
+import { Send, Trash2, ShieldAlert, Bot, Compass, User } from 'lucide-react';
 
 export default function CompanionPage() {
   const [inputText, setInputText] = useState('');
@@ -55,7 +55,7 @@ export default function CompanionPage() {
           background: 'var(--bg-secondary)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontSize: '1.5rem' }}>🤖</span>
+            <span style={{ fontSize: '1.5rem', display: 'inline-flex', alignItems: 'center' }}><Bot size={24} /></span>
             <div>
               <strong style={{ display: 'block', fontSize: '0.95rem' }}>Wanderlore</strong>
               <span style={{ fontSize: '0.75rem', color: 'var(--success)', fontWeight: 600 }}>● Online Advisor</span>
@@ -93,7 +93,7 @@ export default function CompanionPage() {
               gap: 'var(--space-md)',
               opacity: 0.8,
             }}>
-              <span style={{ fontSize: '3rem' }}>🧭</span>
+              <Compass size={40} style={{ opacity: 0.7 }} />
               <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Start Your Cultural Dialogue</h3>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', maxWidth: '400px', lineHeight: 1.6 }}>
                 "How do I politely toast in Georgia?"<br />
@@ -108,7 +108,7 @@ export default function CompanionPage() {
             return (
               <div key={msg.id} className={`chat-message ${isUser ? 'user' : 'assistant'}`}>
                 <div className="chat-avatar">
-                  {isUser ? '👤' : '🤖'}
+                  {isUser ? <User size={18} /> : <Bot size={18} />}
                 </div>
                 <div className="chat-bubble">
                   {isUser ? (

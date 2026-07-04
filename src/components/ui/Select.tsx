@@ -4,7 +4,6 @@ import styles from './Select.module.css';
 export interface SelectOption {
   value: string;
   label: string;
-  emoji?: string;
 }
 
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -34,7 +33,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           >
             {options.map((opt) => (
               <option key={opt.value} value={opt.value} className={styles.option}>
-                {opt.emoji ? `${opt.emoji} ` : ''}
                 {opt.label}
               </option>
             ))}

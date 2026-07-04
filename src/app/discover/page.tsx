@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { INTERESTS, TRAVEL_STYLES, BUDGET_LEVELS } from '@/lib/constants';
 import type { Destination, Interest, TravelStyle, BudgetLevel } from '@/types';
-import { Compass, Sparkles, MapPin } from 'lucide-react';
+import { Compass, Sparkles, MapPin, AlertTriangle, KeyRound, Zap, Calendar } from 'lucide-react';
+import { DynamicIcon } from '@/components/ui/DynamicIcon';
 
 export default function DiscoverPage() {
   const [selectedInterests, setSelectedInterests] = useState<Interest[]>([]);
@@ -90,7 +91,7 @@ export default function DiscoverPage() {
                   onClick={() => toggleInterest(item.value as Interest)}
                   className={`chip ${selectedInterests.includes(item.value as Interest) ? 'active' : ''}`}
                 >
-                  <span>{item.emoji}</span> {item.label}
+                  <DynamicIcon name={item.iconName} size={16} /> {item.label}
                 </button>
               ))}
             </div>
@@ -143,7 +144,7 @@ export default function DiscoverPage() {
       {/* Error state */}
       {error ? (
         <div className="error-state">
-          <p className="error-state-text">⚠️ {error}</p>
+          <p className="error-state-text"><AlertTriangle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {error}</p>
         </div>
       ) : null}
 
@@ -167,7 +168,7 @@ export default function DiscoverPage() {
       {/* Empty state */}
       {!isLoading && destinations.length === 0 && !error && (
         <div className="empty-state">
-          <div className="empty-state-icon">🔮</div>
+          <div className="empty-state-icon"><Sparkles size={48} /></div>
           <h2 className="empty-state-title">Awaiting Your Travel Profile</h2>
           <p className="empty-state-text">
             Choose your cultural passions and let Wanderlore custom engineer destinations loaded with history, lore, and local life.
@@ -183,7 +184,7 @@ export default function DiscoverPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <h3 style={{ fontSize: '1.4rem', fontWeight: 800 }}>
-                    {dest.emoji} {dest.name}
+                    <DynamicIcon name={dest.icon} size={22} className="inline-icon" /> {dest.name}
                   </h3>
                   <span style={{ fontSize: '0.9rem', color: 'var(--text-tertiary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                     <MapPin size={14} /> {dest.country}
@@ -202,7 +203,7 @@ export default function DiscoverPage() {
 
               <div style={{ borderTop: '1px solid var(--border-primary)', paddingTop: 'var(--space-md)' }}>
                 <span className="form-label" style={{ display: 'block', marginBottom: 'var(--space-xs)' }}>
-                  🔑 Local Secret (Hidden Gem)
+                  <KeyRound size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Local Secret (Hidden Gem)
                 </span>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                   <strong>{dest.hiddenGem.split(' - ')[0]}:</strong> {dest.hiddenGem.split(' - ')[1] || dest.hiddenGem}
@@ -212,10 +213,10 @@ export default function DiscoverPage() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 'auto', paddingTop: 'var(--space-md)' }}>
                 {dest.highlights.map((hl, i) => (
                   <Badge key={i} variant="secondary">
-                    ⚡ {hl}
+                    <Zap size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 2 }} /> {hl}
                   </Badge>
                 ))}
-                <Badge variant="outline">📅 Best: {dest.bestTime}</Badge>
+                <Badge variant="outline"><Calendar size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Best: {dest.bestTime}</Badge>
               </div>
             </Card>
           ))}

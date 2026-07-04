@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { GEM_CATEGORIES, SAMPLE_DESTINATIONS } from '@/lib/constants';
 import type { HiddenGem, GemCategory } from '@/types';
-import { Sparkles, MapPin, Search } from 'lucide-react';
+import { Sparkles, MapPin, Search, AlertTriangle, Gem, Heart, Lightbulb, Clock } from 'lucide-react';
+import { DynamicIcon } from '@/components/ui/DynamicIcon';
 
 export default function HiddenGemsPage() {
   const [destination, setDestination] = useState('');
@@ -118,7 +119,7 @@ export default function HiddenGemsPage() {
                   onClick={() => toggleCategory(item.value as GemCategory)}
                   className={`chip ${selectedCats.includes(item.value as GemCategory) ? 'active' : ''}`}
                 >
-                  <span>{item.emoji}</span> {item.label}
+                  <DynamicIcon name={item.iconName} size={16} /> {item.label}
                 </button>
               ))}
             </div>
@@ -135,7 +136,7 @@ export default function HiddenGemsPage() {
       {/* Error state */}
       {error ? (
         <div className="error-state">
-          <p className="error-state-text">⚠️ {error}</p>
+          <p className="error-state-text"><AlertTriangle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {error}</p>
         </div>
       ) : null}
 
@@ -156,7 +157,7 @@ export default function HiddenGemsPage() {
       {/* Empty State */}
       {!isLoading && gems.length === 0 && !error && (
         <div className="empty-state">
-          <div className="empty-state-icon">💎</div>
+          <div className="empty-state-icon"><Gem size={48} /></div>
           <h2 className="empty-state-title">Awaiting Destination Input</h2>
           <p className="empty-state-text">
             Enter a destination above to retrieve authentic, local-focused hidden gems that help support sustainable community travel.
@@ -172,7 +173,7 @@ export default function HiddenGemsPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
-                    {gem.emoji} {gem.name}
+                    <DynamicIcon name={gem.icon} size={20} className="inline-icon" /> {gem.name}
                   </h3>
                   <span style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                     <MapPin size={12} /> {gem.location}
@@ -187,7 +188,7 @@ export default function HiddenGemsPage() {
 
               <div style={{ background: 'var(--bg-tertiary)', padding: 'var(--space-md)', borderRadius: 'var(--radius-md)' }}>
                 <span className="form-label" style={{ fontSize: '0.75rem', display: 'block', marginBottom: 4 }}>
-                  💖 Local Insight
+                  <Heart size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Local Insight
                 </span>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>
                   {gem.whySpecial}
@@ -196,10 +197,10 @@ export default function HiddenGemsPage() {
 
               <div style={{ borderTop: '1px solid var(--border-primary)', paddingTop: 'var(--space-md)', marginTop: 'auto' }}>
                 <p style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', fontStyle: 'italic' }}>
-                  💡 <strong>Insider Tip:</strong> {gem.localTip}
+                  <Lightbulb size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> <strong>Insider Tip:</strong> {gem.localTip}
                 </p>
                 <div style={{ marginTop: 8 }}>
-                  <Badge variant="outline">🕒 Best Time: {gem.bestTime}</Badge>
+                  <Badge variant="outline"><Clock size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Best Time: {gem.bestTime}</Badge>
                 </div>
               </div>
             </Card>

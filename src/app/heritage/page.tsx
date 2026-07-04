@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { SAMPLE_DESTINATIONS } from '@/lib/constants';
 import type { HeritageSite } from '@/types';
-import { Landmark, Compass, Clock, Camera, ExternalLink } from 'lucide-react';
+import { Landmark, Compass, Clock, Camera, ExternalLink, AlertTriangle, MapPin as MapPinIcon, Sparkles } from 'lucide-react';
+import { DynamicIcon } from '@/components/ui/DynamicIcon';
 
 export default function HeritagePage() {
   const [destination, setDestination] = useState('');
@@ -119,7 +120,7 @@ export default function HeritagePage() {
       {/* Error state */}
       {error ? (
         <div className="error-state">
-          <p className="error-state-text">⚠️ {error}</p>
+          <p className="error-state-text"><AlertTriangle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {error}</p>
         </div>
       ) : null}
 
@@ -140,7 +141,7 @@ export default function HeritagePage() {
       {/* Empty state */}
       {!isLoading && sites.length === 0 && !error && (
         <div className="empty-state">
-          <div className="empty-state-icon">🏛️</div>
+          <div className="empty-state-icon"><Landmark size={48} /></div>
           <h2 className="empty-state-title">Awaiting Landmark Details</h2>
           <p className="empty-state-text">
             Enter a destination or specific historic monument above to fetch deep architecture timelines and local legends.
@@ -156,13 +157,13 @@ export default function HeritagePage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <h3 style={{ fontSize: '1.4rem', fontWeight: 800 }}>
-                    {site.emoji} {site.name}
+                    <DynamicIcon name={site.icon} size={22} className="inline-icon" /> {site.name}
                   </h3>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)' }}>
-                    📍 {site.location}
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                    <MapPinIcon size={12} /> {site.location}
                   </span>
                 </div>
-                <Badge variant="outline">🕒 Origin: {site.yearEstablished}</Badge>
+                <Badge variant="outline"><Clock size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Origin: {site.yearEstablished}</Badge>
               </div>
 
               <div>
@@ -170,7 +171,7 @@ export default function HeritagePage() {
                   Architecture & Style
                 </span>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 500 }}>
-                  🏛️ {site.architecturalStyle}
+                  <Landmark size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {site.architecturalStyle}
                 </p>
               </div>
 
@@ -195,7 +196,7 @@ export default function HeritagePage() {
               {/* Fascinating fact callout */}
               <div style={{ background: 'var(--gradient-subtle)', border: '1px dashed var(--accent-primary)', padding: 'var(--space-md)', borderRadius: 'var(--radius-md)' }}>
                 <span className="form-label" style={{ fontSize: '0.7rem', color: 'var(--accent-primary)', display: 'block', marginBottom: 2 }}>
-                  ✨ Did You Know?
+                  <Sparkles size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Did You Know?
                 </span>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>
                   {site.didYouKnow}
@@ -222,7 +223,7 @@ export default function HeritagePage() {
               {site.nearbyAttractions?.length > 0 && (
                 <div style={{ borderTop: '1px solid var(--border-primary)', paddingTop: 'var(--space-sm)' }}>
                   <span className="form-label" style={{ fontSize: '0.7rem', display: 'block', marginBottom: 4 }}>
-                    📍 Nearby Cultural Spots
+                    <MapPinIcon size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Nearby Cultural Spots
                   </span>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                     {site.nearbyAttractions.map((attr, i) => (

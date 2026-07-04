@@ -9,7 +9,7 @@ import { StreamingText } from '@/components/ui/StreamingText';
 import { useStreamingResponse } from '@/hooks/useStreamingResponse';
 import { STORY_STYLES, SAMPLE_DESTINATIONS } from '@/lib/constants';
 import type { StoryStyle } from '@/types';
-import { BookOpen, HelpCircle } from 'lucide-react';
+import { BookOpen, HelpCircle, AlertTriangle } from 'lucide-react';
 
 export default function StoriesPage() {
   const [destination, setDestination] = useState('');
@@ -118,7 +118,7 @@ export default function StoriesPage() {
       {/* Error state */}
       {error ? (
         <div className="error-state">
-          <p className="error-state-text">⚠️ {error}</p>
+          <p className="error-state-text"><AlertTriangle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {error}</p>
         </div>
       ) : null}
 
@@ -134,7 +134,7 @@ export default function StoriesPage() {
       {/* Empty State */}
       {!text && !isStreaming && !error && (
         <div className="empty-state">
-          <div className="empty-state-icon">📖</div>
+          <div className="empty-state-icon"><BookOpen size={48} /></div>
           <h2 className="empty-state-title">Awaiting Story Theme</h2>
           <p className="empty-state-text">
             Provide a destination and narrative style to begin streaming rich historical epics and folktales.

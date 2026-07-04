@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { SAMPLE_DESTINATIONS } from '@/lib/constants';
 import type { Festival } from '@/types';
-import { Sparkles, Calendar, HeartHandshake, AlertCircle } from 'lucide-react';
+import { Sparkles, Calendar, HeartHandshake, AlertCircle, AlertTriangle, PartyPopper, Shirt, Lightbulb } from 'lucide-react';
+import { DynamicIcon } from '@/components/ui/DynamicIcon';
 
 export default function FestivalsPage() {
   const [destination, setDestination] = useState('');
@@ -119,7 +120,7 @@ export default function FestivalsPage() {
       {/* Error state */}
       {error ? (
         <div className="error-state">
-          <p className="error-state-text">⚠️ {error}</p>
+          <p className="error-state-text"><AlertTriangle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {error}</p>
         </div>
       ) : null}
 
@@ -140,7 +141,7 @@ export default function FestivalsPage() {
       {/* Empty state */}
       {!isLoading && festivals.length === 0 && !error && (
         <div className="empty-state">
-          <div className="empty-state-icon">🎭</div>
+          <div className="empty-state-icon"><PartyPopper size={48} /></div>
           <h2 className="empty-state-title">Awaiting Your Input</h2>
           <p className="empty-state-text">
             Enter a region or country above to look up rich local festivals, seasonal happenings, and customs.
@@ -156,7 +157,7 @@ export default function FestivalsPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <h3 style={{ fontSize: '1.3rem', fontWeight: 800 }}>
-                    {fest.emoji} {fest.name}
+                    <DynamicIcon name={fest.icon} size={22} className="inline-icon" /> {fest.name}
                   </h3>
                   <span style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                     <Calendar size={12} /> {fest.date} ({fest.duration})
@@ -183,13 +184,13 @@ export default function FestivalsPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)', background: 'var(--bg-tertiary)', padding: 'var(--space-md)', borderRadius: 'var(--radius-md)' }}>
                 <div>
                   <span className="form-label" style={{ fontSize: '0.7rem', display: 'inline-flex', alignItems: 'center', gap: 4, color: 'var(--accent-primary)', marginBottom: 2 }}>
-                    👗 Dress Code
+                    <Shirt size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Dress Code
                   </span>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-primary)' }}>{fest.dressCode}</p>
                 </div>
                 <div>
                   <span className="form-label" style={{ fontSize: '0.7rem', display: 'inline-flex', alignItems: 'center', gap: 4, color: 'var(--success)', marginBottom: 2 }}>
-                    🤝 Etiquette
+                    <HeartHandshake size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Etiquette
                   </span>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-primary)' }}>{fest.etiquette}</p>
                 </div>
@@ -197,7 +198,7 @@ export default function FestivalsPage() {
 
               <div style={{ borderTop: '1px solid var(--border-primary)', paddingTop: 'var(--space-md)', marginTop: 'auto' }}>
                 <p style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', fontStyle: 'italic', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                  💡 <strong>Local Tip:</strong> {fest.localTip}
+                  <Lightbulb size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> <strong>Local Tip:</strong> {fest.localTip}
                 </p>
               </div>
             </Card>

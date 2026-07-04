@@ -9,78 +9,14 @@ interface DynamicIconProps {
   className?: string;
 }
 
-// Map of common keywords/emojis to Lucide icon names to handle raw emoji replacements
-const EMOJI_TO_ICON_MAP: Record<string, string> = {
-  // Navigation & General
-  '🌍': 'Globe',
-  '🗺️': 'Compass',
-  '💎': 'Gem',
-  '📖': 'BookOpen',
-  '🎭': 'PartyPopper',
-  '🏛️': 'Landmark',
-  '🤖': 'Bot',
-  '📋': 'FileText',
-  '🔮': 'Sparkles',
-  '✨': 'Sparkles',
-  '👤': 'User',
-  '🚶': 'User',
-  '💑': 'Heart',
-  '👨‍👩‍👧‍👦': 'Users',
-  '👥': 'Users',
-  '🎒': 'Footprints',
-  '💰': 'Coins',
-  '💳': 'CreditCard',
-  '📜': 'History',
-  '🐉': 'Flame',
-  '✈️': 'Compass',
-  '🍕': 'Utensils',
-  '🌅': 'Eye',
-  '🏺': 'Hammer',
-  '⛩️': 'Landmark',
-  '🎨': 'Palette',
-  '🛍️': 'ShoppingBag',
-  '🌳': 'Trees',
-  '🌿': 'Leaf',
-  '🌙': 'Moon',
-  '🧗': 'Mountain',
-  '🏗️': 'Building',
-  '🎵': 'Music',
-  '📸': 'Camera',
-  '🧘': 'Heart',
-  '🍜': 'Utensils',
-  '🧗‍♂️': 'Mountain',
-  '🗺': 'Compass',
-  '🍽️': 'Utensils',
-  '🎪': 'PartyPopper',
-  '🏰': 'Landmark',
-  '🎒': 'Briefcase',
-  '❤️': 'Heart',
-  '▲': 'Play',
-  '🚀': 'Rocket',
-  '📅': 'Calendar',
-  '📍': 'MapPin',
-  '⚠️': 'AlertTriangle',
-  '🕒': 'Clock',
-  '💡': 'Lightbulb',
-  '🍜': 'ChefHat',
-  '🧭': 'Compass',
-  '🎒': 'Footprints',
-};
-
-// Normalize names (e.g. "map-pin" or "MapPin" or emoji) to actual Lucide component names
+// Normalize names (e.g. "map-pin" or "MapPin") to actual Lucide component names
 export function getIconComponent(name: string): React.ComponentType<any> {
-  // 1. Direct Emoji Map Check
-  const mappedFromEmoji = EMOJI_TO_ICON_MAP[name];
-  if (mappedFromEmoji && mappedFromEmoji in Lucide) {
-    return (Lucide as any)[mappedFromEmoji];
-  }
-
-  // 2. Exact name check (e.g. "MapPin")
+  // 1. Exact name check (e.g. "MapPin")
   if (name in Lucide) {
     return (Lucide as any)[name];
   }
 
-  // 3. Case-insensitive lookup (e.g. "mappin" -> "MapPin")
+  // 2. Case-insensitive lookup (e.g. "mappin" -> "MapPin")
   const lowerName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
   for (const key of Object.keys(Lucide)) {
     if (key.toLowerCase() === lowerName) {
@@ -88,15 +24,13 @@ export function getIconComponent(name: string): React.ComponentType<any> {
     }
   }
 
-  // 4. Keyword map search
-  const foundEmojiKey = Object.keys(EMOJI_TO_ICON_MAP).find(
-    (key) => name.toLowerCase().includes(key) || key.includes(name.toLowerCase())
-  );
-  if (foundEmojiKey) {
-    const mapped = EMOJI_TO_ICON_MAP[foundEmojiKey];
-    if (mapped in Lucide) {
-      return (Lucide as any)[mapped];
-    }
+  // 3. PascalCase conversion from kebab-case (e.g. "map-pin" -> "MapPin")
+  const pascalCase = name
+    .split(/[-_\s]/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join('');
+  if (pascalCase in Lucide) {
+    return (Lucide as any)[pascalCase];
   }
 
   // Fallback icon

@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { DynamicIcon } from '@/components/ui/DynamicIcon';
 import { NAV_LINKS, APP_TAGLINE, APP_DESCRIPTION } from '@/lib/constants';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles, Bot, Globe } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -11,7 +12,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className={styles.hero} aria-label="Welcome section">
         <div className={styles.heroContent}>
-          <span className={styles.badge}>✨ Gemini 2.5 Flash Powered</span>
+          <span className={styles.badge}><Sparkles size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Gemini 2.5 Flash Powered</span>
           <h1 className={styles.title}>
             Discover the <span className="gradient-text">Stories</span> Behind Every Destination
           </h1>
@@ -60,7 +61,7 @@ export default function Home() {
 
               return (
                 <Card key={link.href} hoverable className={styles.featureCard}>
-                  <div className={styles.cardIcon}>{link.emoji}</div>
+                  <div className={styles.cardIcon}><DynamicIcon name={link.iconName} size={28} /></div>
                   <h3 className={styles.cardTitle}>{link.label}</h3>
                   <p className={styles.cardDesc}>
                     {descriptions[link.href] || 'Explore this cultural feature with custom AI prompts.'}
@@ -80,7 +81,7 @@ export default function Home() {
         <div className="container">
           <div className={styles.showcaseInner}>
             <div className={styles.showcaseContent}>
-              <span className={styles.badge}>🤖 Meet Wanderlore</span>
+              <span className={styles.badge}><Bot size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Meet Wanderlore</span>
               <h2 className={styles.showcaseTitle}>
                 Your Expert <span className="gradient-text">Cultural Companion</span>
               </h2>
@@ -96,7 +97,7 @@ export default function Home() {
 
             <div className={`${styles.companionPreview} glass`}>
               <div className={styles.previewHeader}>
-                <div className={styles.previewAvatar}>🤖</div>
+                <div className={styles.previewAvatar}><Bot size={22} /></div>
                 <div>
                   <div className={styles.previewName}>Wanderlore</div>
                   <div className={styles.previewBadge}>online</div>
@@ -104,7 +105,7 @@ export default function Home() {
               </div>
               <div className={styles.previewMessages}>
                 <div className={styles.previewBubble} style={{ alignSelf: 'flex-start' }}>
-                  Hello explorer! 🌍 Are you planning a trip? Ask me about local customs, language helpers, or regional highlights.
+                  Hello explorer! <Globe size={16} style={{ display: 'inline', verticalAlign: 'middle', margin: '0 2px' }} /> Are you planning a trip? Ask me about local customs, language helpers, or regional highlights.
                 </div>
                 <div className={styles.previewBubble} style={{ alignSelf: 'flex-end', background: 'var(--accent-primary)', color: '#1a1a1a' }}>
                   What is a local greeting in Kyoto, and what is its cultural meaning?

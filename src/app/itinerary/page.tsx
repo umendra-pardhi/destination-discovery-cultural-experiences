@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { INTERESTS, TRAVEL_STYLES, BUDGET_LEVELS, SAMPLE_DESTINATIONS } from '@/lib/constants';
 import type { ItineraryResponse, Interest, TravelStyle, BudgetLevel } from '@/types';
-import { FileText, Compass, Sparkles, MapPin } from 'lucide-react';
+import { FileText, Compass, Sparkles, MapPin, AlertTriangle, Globe, Coins, Clock, Lightbulb, Utensils, Backpack } from 'lucide-react';
+import { DynamicIcon } from '@/components/ui/DynamicIcon';
 
 export default function ItineraryPage() {
   const [destination, setDestination] = useState('');
@@ -142,7 +143,7 @@ export default function ItineraryPage() {
                   onClick={() => toggleInterest(item.value as Interest)}
                   className={`chip ${selectedInterests.includes(item.value as Interest) ? 'active' : ''}`}
                 >
-                  <span>{item.emoji}</span> {item.label}
+                  <DynamicIcon name={item.iconName} size={16} /> {item.label}
                 </button>
               ))}
             </div>
@@ -177,7 +178,7 @@ export default function ItineraryPage() {
       {/* Error state */}
       {error ? (
         <div className="error-state">
-          <p className="error-state-text">⚠️ {error}</p>
+          <p className="error-state-text"><AlertTriangle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {error}</p>
         </div>
       ) : null}
 
@@ -199,7 +200,7 @@ export default function ItineraryPage() {
       {/* Empty State */}
       {!isLoading && !itinerary && !error && (
         <div className="empty-state">
-          <div className="empty-state-icon">📋</div>
+          <div className="empty-state-icon"><FileText size={48} /></div>
           <h2 className="empty-state-title">Awaiting Custom Specs</h2>
           <p className="empty-state-text">
             Enter a destination, select duration and details to construct an optimized day-by-day itinerary complete with local insight guidelines.
@@ -213,14 +214,14 @@ export default function ItineraryPage() {
           {/* Overview Callout */}
           <Card className="glass" padding="lg" style={{ marginBottom: 'var(--space-2xl)', borderLeft: '4px solid var(--accent-primary)' }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: 8 }}>
-              🌍 Journey through {itinerary.destination}
+              <Globe size={22} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} /> Journey through {itinerary.destination}
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6 }}>
               {itinerary.overview}
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
-              <Badge variant="primary">💰 Est. Daily Budget: {itinerary.budgetEstimate}</Badge>
-              <Badge variant="outline">🕒 Duration: {itinerary.totalDays} Days</Badge>
+              <Badge variant="primary"><Coins size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Est. Daily Budget: {itinerary.budgetEstimate}</Badge>
+              <Badge variant="outline"><Clock size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> Duration: {itinerary.totalDays} Days</Badge>
             </div>
           </Card>
 
@@ -240,11 +241,11 @@ export default function ItineraryPage() {
                     <div key={i} className="itinerary-activity">
                       <div className="itinerary-activity-time">{act.time}</div>
                       <h4 className="itinerary-activity-name">
-                        {act.emoji} {act.activity}
+                        <DynamicIcon name={act.icon} size={18} className="inline-icon" /> {act.activity}
                       </h4>
                       <p className="itinerary-activity-desc">{act.description}</p>
                       <p className="itinerary-activity-tip">
-                        💡 {act.tip}
+                        <Lightbulb size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} /> {act.tip}
                       </p>
                     </div>
                   ))}
@@ -261,7 +262,7 @@ export default function ItineraryPage() {
                   alignItems: 'center',
                   gap: 12,
                 }}>
-                  <span style={{ fontSize: '1.5rem' }}>🍜</span>
+                  <span style={{ fontSize: '1.5rem', display: 'inline-flex', alignItems: 'center' }}><Utensils size={24} /></span>
                   <div>
                     <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--accent-primary)', display: 'block' }}>
                       Recommended Culinary Experience
@@ -282,7 +283,7 @@ export default function ItineraryPage() {
           {itinerary.packingTips?.length > 0 && (
             <Card className="glass" padding="lg" style={{ marginTop: 'var(--space-2xl)' }}>
               <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: 'var(--space-md)' }}>
-                🎒 Recommended packing & readiness
+                <Backpack size={20} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} /> Recommended packing & readiness
               </h3>
               <ul style={{ paddingLeft: 'var(--space-lg)', display: 'flex', flexDirection: 'column', gap: 6, fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
                 {itinerary.packingTips.map((tip, idx) => (
